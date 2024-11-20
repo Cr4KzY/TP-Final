@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+   postgres:
+     image: postgres:13
+     container_name: wiki_postgres
+     restart: always
+     environment:
+       POSTGRES_USER: wikijs
+       POSTGRES_PASSWORD: wikijs-password
+       POSTGRES_DB: wiki
+     volumes:
+       - postgres_data:/var/lib/postgresql/data
+
+   wiki:
+     build: .
+     container_name: wiki_app
+     restart: always
+     ports:
+      - "3000:3000"
+     depends_on:
+      - postgres
+     volumes:
+      - wiki_data:/app
+
+volumes:
+  postgres_data:
+  wiki_data:
+
+

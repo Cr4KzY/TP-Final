@@ -1,0 +1,9 @@
+FROM node:16
+RUN apt-get update && apt-get install -y wget
+WORKDIR /app
+RUN wget https://github.com/Requarks/wiki/releases/download/2.5.300/wiki-js.tar.gz \
+	&& tar -xzf wiki-js.tar.gz -C /app \
+	&& rm wiki-js.tar.gz
+COPY config.yml /app/config.yml
+EXPOSE 3000
+CMD ["node", "server"]
